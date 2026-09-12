@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_fabric_inspection_line_list" model="ir.ui.view">
+        <field name="name">fabric.inspection.line.list</field>
+        <field name="model">fabric.inspection.line</field>
+        <field name="arch" type="xml">
+            <list string="Roll-wise Inspection Lines" decoration-danger="line_result == 'fail'"
+                  decoration-success="line_result == 'pass'">
+                <field name="report_id"/>
+                <field name="roll_no"/>
+                <field name="actual_qty"/>
+                <field name="avg_width"/>
+                <field name="total_point" sum="Total"/>
+                <field name="points_per_100sqyd"/>
+                <field name="line_result" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_fabric_inspection_line" model="ir.actions.act_window">
+        <field name="name">Roll-wise Inspection Lines</field>
+        <field name="res_model">fabric.inspection.line</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

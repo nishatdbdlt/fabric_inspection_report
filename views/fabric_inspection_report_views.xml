@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==================== FORM VIEW ==================== -->
+    <record id="view_fabric_inspection_report_form" model="ir.ui.view">
+        <field name="name">fabric.inspection.report.form</field>
+        <field name="model">fabric.inspection.report</field>
+        <field name="arch" type="xml">
+            <form string="Fabric Inspection Report">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" type="object"
+                            class="oe_highlight" invisible="state != 'confirmed'"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object"
+                            invisible="state == 'draft'"/>
+                    <button name="action_print_report" string="Print Report" type="object"
+                            icon="fa-print"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,approved"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Fail" bg_color="text-bg-danger"
+                            invisible="result != 'fail'"/>
+                    <widget name="web_ribbon" title="Pass" bg_color="text-bg-success"
+                            invisible="result != 'pass'"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <h3>Fabric Inspection Report (4 Point System)</h3>
+                    </div>
+                    <group>
+                        <group string="Company &amp; Form">
+                            <field name="company_type" widget="radio"/>
+                            <field name="form_reference"/>
+                            <field name="revision_no"/>
+                            <field name="revision_date"/>
+                            <field name="date"/>
+                            <field name="fabric_type"/>
+                        </group>
+                        <group string="Order Details">
+                            <field name="buyer"/>
+                            <field name="style"/>
+                            <field name="color"/>
+                            <field name="fabric_supplier"/>
+                            <field name="fabric_item"/>
+                            <field name="lot_no"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Quantities">
+                            <field name="inspection_qty"/>
+                            <field name="pkg"/>
+                            <field name="received_rolls"/>
+                            <field name="received_qty"/>
+                        </group>
+                        <group string="Width">
+                            <field name="found_cwidth" readonly="1"/>
+                            <field name="is_cutable" readonly="1"/>
+                            <field name="pass_threshold"/>
+                            <field name="points_per_piece"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Roll-wise Inspection">
+                            <field name="line_ids">
+                                <list editable="bottom" decoration-danger="line_result == 'fail'"
+                                      decoration-success="line_result == 'pass'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="roll_no"/>
+                                    <field name="ticket_qty"/>
+                                    <field name="actual_qty"/>
+                                    <field name="short_excess" readonly="1"/>
+                                    <field name="width_first"/>
+                                    <field name="width_middle"/>
+                                    <field name="width_last"/>
+                                    <field name="avg_width" readonly="1"/>
+                                    <field name="lcr_shade"/>
+                                    <field name="running_shade"/>
+                                    <field name="pieces"/>
+                                    <field name="pieces_points" readonly="1"/>
+                                    <field name="shade_bar"/>
+                                    <field name="foreign_yarn"/>
+                                    <field name="crease_marks"/>
+                                    <field name="dying_fault"/>
+                                    <field name="slub"/>
+                                    <field name="knot"/>
+                                    <field name="hole"/>
+                                    <field name="spot_stain"/>
+                                    <field name="missing_yarn_1pt"/>
+                                    <field name="missing_yarn_2pt"/>
+                                    <field name="missing_yarn_3pt"/>
+                                    <field name="missing_yarn_4pt"/>
+                                    <field name="thick_yarn_1pt"/>
+                                    <field name="thick_yarn_2pt"/>
+                                    <field name="thick_yarn_3pt"/>
+                                    <field name="thick_yarn_4pt"/>
+                                    <field name="total_point" readonly="1" sum="Total"/>
+                                    <field name="points_per_100sqyd" readonly="1"/>
+                                    <field name="line_result" widget="badge"
+                                           decoration-success="line_result == 'pass'"
+                                           decoration-danger="line_result == 'fail'"/>
+                                    <field name="comments"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer" col="2">
+                                <field name="roll_count" readonly="1"/>
+                                <field name="total_point" readonly="1"/>
+                                <field name="total_actual_qty" readonly="1"/>
+                                <field name="average_point" readonly="1"/>
+                                <field name="average_points_100sqyd" readonly="1"/>
+                                <field name="computed_result" readonly="1" widget="badge"
+                                       decoration-success="computed_result == 'pass'"
+                                       decoration-danger="computed_result == 'fail'"/>
+                            </group>
+                        </page>
+                        <page string="Result &amp; Sign-off">
+                            <group>
+                                <group string="Result">
+                                    <field name="manual_override_fail"/>
+                                    <field name="result" widget="badge"
+                                           decoration-success="result == 'pass'"
+                                           decoration-danger="result == 'fail'"/>
+                                </group>
+                                <group string="Sign-off">
+                                    <field name="prepared_by"/>
+                                    <field name="quality_inch_id"/>
+                                    <field name="cutting_inch_id"/>
+                                    <field name="tm_id"/>
+                                    <field name="qm_id"/>
+                                    <field name="merchandiser_id"/>
+                                </group>
+                            </group>
+                            <group string="Comments">
+                                <field name="comments" nolabel="1" placeholder="e.g. Fail due to shading..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ==================== LIST VIEW ==================== -->
+    <record id="view_fabric_inspection_report_list" model="ir.ui.view">
+        <field name="name">fabric.inspection.report.list</field>
+        <field name="model">fabric.inspection.report</field>
+        <field name="arch" type="xml">
+            <list string="Fabric Inspection Reports"
+                  decoration-danger="result == 'fail'"
+                  decoration-success="result == 'pass'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="company_type"/>
+                <field name="buyer"/>
+                <field name="style"/>
+                <field name="fabric_item"/>
+                <field name="roll_count"/>
+                <field name="total_point"/>
+                <field name="average_points_100sqyd"/>
+                <field name="result" widget="badge"
+                       decoration-success="result == 'pass'"
+                       decoration-danger="result == 'fail'"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ==================== SEARCH VIEW ==================== -->
+    <record id="view_fabric_inspection_report_search" model="ir.ui.view">
+        <field name="name">fabric.inspection.report.search</field>
+        <field name="model">fabric.inspection.report</field>
+        <field name="arch" type="xml">
+            <search string="Search Fabric Inspection Reports">
+                <field name="name"/>
+                <field name="buyer"/>
+                <field name="style"/>
+                <field name="fabric_supplier"/>
+                <field name="fabric_item"/>
+                <field name="lot_no"/>
+                <separator/>
+                <filter string="Pass" name="filter_pass" domain="[('result', '=', 'pass')]"/>
+                <filter string="Fail" name="filter_fail" domain="[('result', '=', 'fail')]"/>
+                <separator/>
+                <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Confirmed" name="filter_confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Approved" name="filter_approved" domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter string="Date" name="filter_date" date="date"/>
+                <group expand="0" string="Group By">
+                    <filter string="Buyer" name="group_buyer" context="{'group_by': 'buyer'}"/>
+                    <filter string="Company" name="group_company" context="{'group_by': 'company_type'}"/>
+                    <filter string="Result" name="group_result" context="{'group_by': 'result'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ==================== PIVOT VIEW ==================== -->
+    <record id="view_fabric_inspection_report_pivot" model="ir.ui.view">
+        <field name="name">fabric.inspection.report.pivot</field>
+        <field name="model">fabric.inspection.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Fabric Inspection Analysis">
+                <field name="buyer" type="row"/>
+                <field name="date" type="col" interval="month"/>
+                <field name="total_point" type="measure"/>
+                <field name="average_points_100sqyd" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ==================== ACTION ==================== -->
+    <record id="action_fabric_inspection_report" model="ir.actions.act_window">
+        <field name="name">Fabric Inspection Reports</field>
+        <field name="res_model">fabric.inspection.report</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="search_view_id" ref="view_fabric_inspection_report_search"/>
+        <field name="context">{'search_default_group_state': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Fabric Inspection Report
+            </p>
+            <p>
+                Digitized 4-Point System fabric inspection report for
+                Temakaw Fashion Ltd / K.A.W. Garments Industry Ltd.
+            </p>
+        </field>
+    </record>
+
+</odoo>

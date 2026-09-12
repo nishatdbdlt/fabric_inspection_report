@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_fabric_inspection_root"
+              name="Fabric Inspection"
+              sequence="45"
+              web_icon="fabric_inspection_report,static/description/icon.png"/>
+
+    <menuitem id="menu_fabric_inspection_reports"
+              name="Inspection Reports"
+              parent="menu_fabric_inspection_root"
+              sequence="10"/>
+
+    <menuitem id="menu_fabric_inspection_report_action"
+              name="Fabric Inspection Reports"
+              parent="menu_fabric_inspection_reports"
+              action="action_fabric_inspection_report"
+              sequence="10"/>
+
+    <menuitem id="menu_fabric_inspection_lines_action"
+              name="Roll-wise Lines"
+              parent="menu_fabric_inspection_reports"
+              action="action_fabric_inspection_line"
+              sequence="20"/>
+
+    <menuitem id="menu_fabric_inspection_config"
+              name="Configuration"
+              parent="menu_fabric_inspection_root"
+              sequence="90"
+              groups="fabric_inspection_report.group_fabric_inspection_manager"/>
+
+</odoo>

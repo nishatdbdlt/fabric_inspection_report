@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_fabric_inspection_document">
+        <t t-foreach="docs" t-as="doc">
+            <div class="page" style="font-size:10px;">
+                <table style="width:100%; border-collapse: collapse; border: 1px solid black;">
+                    <tr>
+                        <td style="border:1px solid black; padding:4px; width:70%;" rowspan="2">
+                            <h3 style="margin:0;">
+                                <span t-if="doc.company_type == 'temakaw'">☑ Temakaw Fashion Ltd</span>
+                                <span t-else="">☐ Temakaw Fashion Ltd</span>
+                                <br/>
+                                <span t-if="doc.company_type == 'kaw'">☑ K.A.W. Garments Industry Ltd</span>
+                                <span t-else="">☐ K.A.W. Garments Industry Ltd</span>
+                            </h3>
+                            <div>808/1 &amp; 808/2 Shewrapara, Mirpur, Dhaka-1216</div>
+                            <h4 style="margin:4px 0;">Fabric Inspection Reports (4 point system)</h4>
+                        </td>
+                        <td style="border:1px solid black; padding:4px;">
+                            <span t-field="doc.form_reference"/><br/>
+                            Revision Date: <span t-field="doc.revision_date"/><br/>
+                            Revision No.: <span t-field="doc.revision_no"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width:100%; border-collapse: collapse; border:1px solid black; margin-top:4px;">
+                    <tr>
+                        <td style="border:1px solid black; padding:3px;">Buyer: <span t-field="doc.buyer"/></td>
+                        <td style="border:1px solid black; padding:3px;">Inspection Qty: <span t-field="doc.inspection_qty"/></td>
+                        <td style="border:1px solid black; padding:3px;">Date: <span t-field="doc.date"/></td>
+                        <td style="border:1px solid black; padding:3px;">PKG: <span t-field="doc.pkg"/></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid black; padding:3px;">Style: <span t-field="doc.style"/></td>
+                        <td style="border:1px solid black; padding:3px;">Total Point: <span t-field="doc.total_point"/></td>
+                        <td style="border:1px solid black; padding:3px;" rowspan="3"/>
+                        <td style="border:1px solid black; padding:3px;">Received Rolls: <span t-field="doc.received_rolls"/></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid black; padding:3px;">Color: <span t-field="doc.color"/></td>
+                        <td style="border:1px solid black; padding:3px;">Average Point: <span t-field="doc.average_point"/></td>
+                        <td style="border:1px solid black; padding:3px;">Received Qty: <span t-field="doc.received_qty"/></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid black; padding:3px;">Fabric Supplier: <span t-field="doc.fabric_supplier"/></td>
+                        <td style="border:1px solid black; padding:3px;">Result: <span t-field="doc.result"/></td>
+                        <td style="border:1px solid black; padding:3px;">Found C-Width/Cutable: <span t-field="doc.found_cwidth"/></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid black; padding:3px;" colspan="4">Fabric Item: <span t-field="doc.fabric_item"/> &#160;|&#160; Lot No: <span t-field="doc.lot_no"/></td>
+                    </tr>
+                </table>
+
+                <table style="width:100%; border-collapse: collapse; border:1px solid black; margin-top:4px; font-size:8px;">
+                    <thead>
+                        <tr style="background-color:#eee;">
+                            <th style="border:1px solid black; padding:2px;">Roll No</th>
+                            <th style="border:1px solid black; padding:2px;">Ticket Qty</th>
+                            <th style="border:1px solid black; padding:2px;">Actual Qty</th>
+                            <th style="border:1px solid black; padding:2px;">Short/Excess</th>
+                            <th style="border:1px solid black; padding:2px;">Width 1st</th>
+                            <th style="border:1px solid black; padding:2px;">Width Mid</th>
+                            <th style="border:1px solid black; padding:2px;">Width Last</th>
+                            <th style="border:1px solid black; padding:2px;">LCR</th>
+                            <th style="border:1px solid black; padding:2px;">Run. Shade</th>
+                            <th style="border:1px solid black; padding:2px;">Pieces</th>
+                            <th style="border:1px solid black; padding:2px;">Pieces Pts</th>
+                            <th style="border:1px solid black; padding:2px;">Shade Bar</th>
+                            <th style="border:1px solid black; padding:2px;">Foreign Yarn</th>
+                            <th style="border:1px solid black; padding:2px;">Crease</th>
+                            <th style="border:1px solid black; padding:2px;">Dying</th>
+                            <th style="border:1px solid black; padding:2px;">Slub</th>
+                            <th style="border:1px solid black; padding:2px;">Knot</th>
+                            <th style="border:1px solid black; padding:2px;">Hole</th>
+                            <th style="border:1px solid black; padding:2px;">Spot/Stain</th>
+                            <th style="border:1px solid black; padding:2px;">Miss. Yarn Pts</th>
+                            <th style="border:1px solid black; padding:2px;">Thick Yarn Pts</th>
+                            <th style="border:1px solid black; padding:2px;">Total Pt</th>
+                            <th style="border:1px solid black; padding:2px;">Pts/100Sq.Yd</th>
+                            <th style="border:1px solid black; padding:2px;">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.line_ids" t-as="line">
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.roll_no"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.ticket_qty"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.actual_qty"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.short_excess"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.width_first"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.width_middle"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.width_last"/></td>
+                            <td style="border:1px solid black; padding:2px;">
+                                <span t-if="line.lcr_shade">LCR</span>
+                            </td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.running_shade"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.pieces"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.pieces_points"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.shade_bar"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.foreign_yarn"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.crease_marks"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.dying_fault"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.slub"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.knot"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.hole"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.spot_stain"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.missing_yarn_points"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.thick_yarn_points"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.total_point"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.points_per_100sqyd"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="line.line_result"/></td>
+                        </tr>
+                        <tr style="font-weight:bold; background-color:#f5f5f5;">
+                            <td colspan="20" style="border:1px solid black; padding:2px; text-align:right;">Total</td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="doc.total_point"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="doc.average_points_100sqyd"/></td>
+                            <td style="border:1px solid black; padding:2px;"><span t-field="doc.result"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table style="width:100%; border-collapse: collapse; border:1px solid black; margin-top:4px;">
+                    <tr>
+                        <td style="border:1px solid black; padding:3px;">Comments: <span t-field="doc.comments"/></td>
+                    </tr>
+                </table>
+
+                <table style="width:100%; border-collapse: collapse; border:1px solid black; margin-top:10px; text-align:center;">
+                    <tr>
+                        <td style="border:1px solid black; padding:14px 3px 3px 3px;">Prepared by<br/><span t-field="doc.prepared_by.name"/></td>
+                        <td style="border:1px solid black; padding:14px 3px 3px 3px;">Quality/INCH<br/><span t-field="doc.quality_inch_id.name"/></td>
+                        <td style="border:1px solid black; padding:14px 3px 3px 3px;">Cutting/INCH<br/><span t-field="doc.cutting_inch_id.name"/></td>
+                        <td style="border:1px solid black; padding:14px 3px 3px 3px;">T.M<br/><span t-field="doc.tm_id.name"/></td>
+                        <td style="border:1px solid black; padding:14px 3px 3px 3px;">QM<br/><span t-field="doc.qm_id.name"/></td>
+                        <td style="border:1px solid black; padding:14px 3px 3px 3px;">MRCH<br/><span t-field="doc.merchandiser_id.name"/></td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_fabric_inspection">
+        <t t-call="web.html_container">
+            <t t-call="fabric_inspection_report.report_fabric_inspection_document"/>
+        </t>
+    </template>
+</odoo>

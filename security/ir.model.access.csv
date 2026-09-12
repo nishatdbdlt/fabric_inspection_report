@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fabric_inspection_report_user,fabric.inspection.report.user,model_fabric_inspection_report,group_fabric_inspection_user,1,1,1,0
+access_fabric_inspection_report_manager,fabric.inspection.report.manager,model_fabric_inspection_report,group_fabric_inspection_manager,1,1,1,1
+access_fabric_inspection_line_user,fabric.inspection.line.user,model_fabric_inspection_line,group_fabric_inspection_user,1,1,1,1
+access_fabric_inspection_line_manager,fabric.inspection.line.manager,model_fabric_inspection_line,group_fabric_inspection_manager,1,1,1,1

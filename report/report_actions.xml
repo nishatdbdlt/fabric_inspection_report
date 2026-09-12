@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_fabric_inspection" model="ir.actions.report">
+        <field name="name">Fabric Inspection Report</field>
+        <field name="model">fabric.inspection.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fabric_inspection_report.report_fabric_inspection</field>
+        <field name="report_file">fabric_inspection_report.report_fabric_inspection</field>
+        <field name="paperformat_id" ref="paperformat_fabric_inspection"/>
+        <field name="print_report_name">'Fabric Inspection Report - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_fabric_inspection_report"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
